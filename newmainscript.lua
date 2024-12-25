@@ -35,25 +35,19 @@ local function vapeGithubRequest(scripturl)
 		task.delay(15, function()
 			if not res and not errorPopupShown then
 				errorPopupShown = true
-				displayErrorPopup("The connection to github is taking a while, Please be patient.")
+				displayErrorPopup("The connection to GitHub is taking a while, Please be patient.")
 			end
 		end)
-		-- Change only for MainScript.lua
-		if scripturl == "MainScript.lua" then
-			suc, res = pcall(function() 
-				return game:HttpGet("https://raw.githubusercontent.com/xslvrrr/oldvape-for-degens-and-bad-execs/main/mainscript.lua", true) 
-			end)
-		else
-			suc, res = pcall(function() 
-				return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/"..scripturl, true) 
-			end)
-		end
+		suc, res = pcall(function() 
+			-- Updated GitHub link
+			return game:HttpGet("https://raw.githubusercontent.com/xslvrrr/oldvape-for-degens-and-bad-execs/main/"..scripturl, true) 
+		end)
 		if not suc or res == "404: Not Found" then
 			if identifyexecutor and ({identifyexecutor()})[1] == 'Wave' then
-				displayErrorPopup('Stop using detected garbage, Vape will not work on such garabge until they fix BOTH HttpGet & file functions.')
+				displayErrorPopup('Stop using detected garbage, Vape will not work on such garbage until they fix BOTH HttpGet & file functions.')
 				error(res)
 			end
-			displayErrorPopup("Failed to connect to github : vape/"..scripturl.." : "..res)
+			displayErrorPopup("Failed to connect to GitHub : vape/"..scripturl.." : "..res)
 			error(res)
 		end
 		if scripturl:find(".lua") then res = "--This watermark is used to delete the file if its cached, remove it to make the file persist after commits.\n"..res end
@@ -64,7 +58,8 @@ end
 
 if not shared.VapeDeveloper then
 	local _, subbed = pcall(function()
-		return game:HttpGet('https://github.com/7GrandDadPGN/VapeV4ForRoblox')
+		-- Updated GitHub link for initial connection
+		return game:HttpGet('https://github.com/xslvrrr/oldvape-for-degens-and-bad-execs')
 	end)
 	local commit = subbed:find('currentOid')
 	commit = commit and subbed:sub(commit + 13, commit + 52) or nil
@@ -98,9 +93,10 @@ if not shared.VapeDeveloper then
 			writefile("vape/commithash.txt", commit)
 		end
 	else
-		displayErrorPopup("Failed to connect to github, please try using a VPN.")
-		error("Failed to connect to github, please try using a VPN.")
+		displayErrorPopup("Failed to connect to GitHub, please try using a VPN.")
+		error("Failed to connect to GitHub, please try using a VPN.")
 	end
 end
 
-return loadstring(vapeGithubRequest("MainScript.lua"))()
+-- Updated mainscript link
+return loadstring(vapeGithubRequest("mainscript.lua"))()
