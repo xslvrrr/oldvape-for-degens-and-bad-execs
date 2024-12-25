@@ -38,7 +38,16 @@ local function vapeGithubRequest(scripturl)
 				displayErrorPopup("The connection to github is taking a while, Please be patient.")
 			end
 		end)
-		suc, res = pcall(function() return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/"..scripturl, true) end)
+		-- Change only for MainScript.lua
+		if scripturl == "MainScript.lua" then
+			suc, res = pcall(function() 
+				return game:HttpGet("https://raw.githubusercontent.com/xslvrrr/oldvape-for-degens-and-bad-execs/main/mainscript.lua", true) 
+			end)
+		else
+			suc, res = pcall(function() 
+				return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/"..readfile("vape/commithash.txt").."/"..scripturl, true) 
+			end)
+		end
 		if not suc or res == "404: Not Found" then
 			if identifyexecutor and ({identifyexecutor()})[1] == 'Wave' then
 				displayErrorPopup('Stop using detected garbage, Vape will not work on such garabge until they fix BOTH HttpGet & file functions.')
